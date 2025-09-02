@@ -1,62 +1,67 @@
 #include <iostream>
 
-#include "list/my_list.h"
+#include "Inc/my_list.h"
 
 using namespace std;
 
 struct STROOKT {
-    int liczba1;
-    char znak;
+    int number;
+    char character;
     // string napis;
 };
 
 int main() {
-    list<STROOKT> my_list;
+    list<STROOKT> my_list1;
 
-    STROOKT strookt;
+    STROOKT strookt1;
 
-    strookt.liczba1 = 1;
-    strookt.znak = 'A';
-    // strookt.napis = "Pierwszy wezel";
-    my_list.push_back(strookt);
-
-    strookt.liczba1 = 2;
-    strookt.znak = 'B';
-    // strookt.napis = "Drugi wezel";
-    my_list.push_back(strookt);
-
-    strookt.liczba1 = 3;
-    strookt.znak = 'C';
-    // strookt.napis = "Drugi wezel";
-    my_list.push_back(strookt);
-
-    strookt.liczba1 = 10;
-    strookt.znak = 'Z';
-    // strookt.napis = "Drugi wezel";
-    my_list.push_front(strookt);
-
-    strookt.liczba1 = 20;
-    strookt.znak = 'Q';
-    // strookt.napis = "Drugi wezel";
-    my_list.insert(55 , strookt);
-
-    // my_list.pop_back();
-    // my_list.pop_front();
-    // my_list.pop_element(2);
-    // my_list.erase();
-
-
-    cout<<my_list.get_size()<<endl;
-
-    for (STROOKT value : my_list) {
-        cout<<value.liczba1 << '\t' << value.znak << endl;
+    for (int i=0; i<10; i++) {
+        strookt1.number = i;
+        strookt1.character = 'A' + i;
+        my_list1.push_back(strookt1);
     }
 
+    my_list1.pop_back();
+    my_list1.pop_front();
+    my_list1.pop_element(2);
 
-    // cout<<my_list.first().znak<<endl;
-    // cout<<my_list.last().znak<<endl;
+    cout<<"first list size: " << my_list1.get_size()<<endl;
 
+    cout<<"list 1: " <<endl;
+    for (STROOKT value : my_list1) {
+        cout<<value.number << '\t' << value.character << endl;
+    }
+    cout<<endl<<endl;
 
+    STROOKT strookt2;
+    strookt2.number = 99;
+    strookt2.character = 'Z';
+
+    list<STROOKT> my_list2 = {
+        strookt1, strookt2
+    };
+
+    cout<<"list 2: "<<endl;
+    for (STROOKT value : my_list2) {
+        cout<<value.number << '\t' << value.character << endl;
+    }
+    cout<<endl<<endl;
+
+    my_list1 = my_list2;
+    cout<<"list 1 "<<endl;
+    for (STROOKT value : my_list1) {
+        cout<<value.number << '\t' << value.character << endl;
+    }
+    cout<<endl<<endl;
+
+    my_list2.erase();
+    auto iter = my_list2.begin();
+    if(iter == nullptr) {
+        cout<<"List 2 is empty"<<endl<<endl;
+    }
+
+    cout<<my_list1.first().character<<endl;
+    cout<<my_list1.last().number<<endl;
 
     return 0;
 }

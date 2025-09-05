@@ -15,14 +15,6 @@ int main() {
 
     for (int i=0; i<10; ++i) {
         wektor.push_back(i);
-<<<<<<< HEAD
-    }
-
-    for (int i=0; i<10; ++i) {
-        // cout<<wektor<<endl;
-        wektor.push_front(i);
-    }
-=======
         cout<<wektor.get_size()<<' '<<wektor.get_capacity()<<'\n';
     }
     cout<<endl;
@@ -56,7 +48,6 @@ int main() {
         cout<<data<<' ';
     }
     cout<<endl<<endl;
->>>>>>> develop
 
     wektor.clean();
 

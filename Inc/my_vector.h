@@ -4,30 +4,30 @@
 #include <stdexcept>
 
 template <typename T>
-class _array_iterator
+class _vector_iterator
 {
     T *current;
 public:
-    // _array_iterator(arr) : current(node) {};     //
+    // _vector_iterator(arr) : current(node) {};     //
 
-    T & operator * () {}
-
-    _array_iterator & operator ++ () {return *this;}
-
-    _array_iterator & operator -- () {return *this;}
-
-    bool operator !=(const _array_iterator & other) const {
-        // return current != other.current;
-    }
-
-    bool operator == (const _array_iterator & other) const {
-        // return current == other.current;
-    }
+    // T & operator * () {}
+    //
+    // _vector_iterator & operator ++ () {return *this;}
+    //
+    // _vector_iterator & operator -- () {return *this;}
+    //
+    // bool operator !=(const _vector_iterator & other) const {
+    //     // return current != other.current;
+    // }
+    //
+    // bool operator == (const _vector_iterator & other) const {
+    //     // return current == other.current;
+    // }
 };
 
 
 template <typename T>
-class array
+class vector
 {
     T* arr;
 
@@ -55,11 +55,11 @@ class array
 
 public:
 
-    array();     //
-    ~array();    // make sure that every node is deleted
+    vector();     //
+    ~vector();    // make sure that every node is deleted
 
-    // _array_iterator<T> begin() {}
-    // _array_iterator<T> end() {}
+    // _vector_iterator<T> begin() {}
+    // _vector_iterator<T> end() {}
 
     void push_back(const T& data);// push node at the end
     void push_front(const T& data); // push node to the front
@@ -68,7 +68,7 @@ public:
     void pop_back(); // delete last node
     void pop_front();// delete first node
     void pop_element(int position); // delete node at the given position
-    void erase(_array_iterator<T> iter1,  _array_iterator<T> iter2 = nullptr); //
+    // void erase(_vector_iterator<T> iter1,  _vector_iterator<T> iter2 = nullptr); //
     void clean();
 
     T& first();
@@ -83,18 +83,18 @@ public:
 };
 
 template <typename T>
-array<T>::array() : arr(nullptr), _size(0), _capacity(0)
+vector<T>::vector() : arr(nullptr), _size(0), _capacity(0)
 {}
 
 template <typename T>
-array<T>::~array()
+vector<T>::~vector()
 {
     clean();
 }
 
 
 template <typename T>
-void array<T>::push_back(const T& data)
+void vector<T>::push_back(const T& data)
 {
     _reserve();
     arr[_size] = data;
@@ -102,7 +102,7 @@ void array<T>::push_back(const T& data)
 }
 
 template <typename T>
-void array<T>::push_front(const T& data)
+void vector<T>::push_front(const T& data)
 {
     _reserve();
 
@@ -115,7 +115,7 @@ void array<T>::push_front(const T& data)
 }
 
 template <typename T>
-void array<T>::insert(int position, T& data)
+void vector<T>::insert(int position, T& data)
 {
     if (position == 0) {
         push_front();
@@ -141,11 +141,11 @@ void array<T>::insert(int position, T& data)
 }
 
 template <typename T>
-void array<T>::clean() {
+void vector<T>::clean() {
     delete [] arr;
     arr = nullptr;
     _capacity = 0;
     _size = 0;
 }
 
-#endif // LIST_H
+#endif // VECTOR_H

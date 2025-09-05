@@ -5,7 +5,8 @@ project(list)
 # include_directories(Inc)
 
 set(SOURCE_FILES
-    list_example.cpp
+    # list_example.cpp
+    vector_example.cpp
 )
 
 add_executable(list ${SOURCE_FILES})

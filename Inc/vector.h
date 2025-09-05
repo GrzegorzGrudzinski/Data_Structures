@@ -10,26 +10,18 @@ class _array_iterator
 public:
     // _array_iterator(arr) : current(node) {};     //
 
-    T & operator * () {
-        return current->data;
-    }
+    T & operator * () {}
 
-    _array_iterator & operator ++ () {
-        current = current->next;
-        return *this;
-    }
+    _array_iterator & operator ++ () {return *this;}
 
-    _array_iterator & operator -- () {
-        current = current->prev;
-        return *this;
-    }
+    _array_iterator & operator -- () {return *this;}
 
     bool operator !=(const _array_iterator & other) const {
-        return current != other.current;
+        // return current != other.current;
     }
 
     bool operator == (const _array_iterator & other) const {
-        return current == other.current;
+        // return current == other.current;
     }
 };
 

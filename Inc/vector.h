@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <stdexcept>
+
 template <typename T>
 class _array_iterator
 {
@@ -38,23 +40,34 @@ class array
     T* arr;
 
     int _size;
-    // int _capacity;
+    int _capacity;
 
-    T* resize () {
+    void _reserve () {
+        int tempCapacity;
+        if (_size == _capacity) {
+            if (_capacity == 0) {
+                tempCapacity = 1;
+            } else {
+                tempCapacity = 2*_capacity;
+            }
 
+            T* temp = new T [tempCapacity];
+            for (int i=0; i<_size; ++i) {
+                temp[i] = arr[i];
+            }
+            delete [] arr;
+            arr = temp;
+            _capacity = tempCapacity;
+        }
     }
+
 public:
 
     array();     //
     ~array();    // make sure that every node is deleted
 
-    _array_iterator<T> begin() {
-        return  _array_iterator<T> ();
-    }
-
-    _array_iterator<T> end() {
-        return  _array_iterator<T> ();
-    }
+    // _array_iterator<T> begin() {}
+    // _array_iterator<T> end() {}
 
     void push_back(const T& data);// push node at the end
     void push_front(const T& data); // push node to the front
@@ -64,6 +77,7 @@ public:
     void pop_front();// delete first node
     void pop_element(int position); // delete node at the given position
     void erase(_array_iterator<T> iter1,  _array_iterator<T> iter2 = nullptr); //
+    void clean();
 
     T& first();
     T& last();
@@ -77,8 +91,69 @@ public:
 };
 
 template <typename T>
-array<T>::array() : arr(nullptr), _size(0)
+array<T>::array() : arr(nullptr), _size(0), _capacity(0)
 {}
 
+template <typename T>
+array<T>::~array()
+{
+    clean();
+}
+
+
+template <typename T>
+void array<T>::push_back(const T& data)
+{
+    _reserve();
+    arr[_size] = data;
+    _size++;
+}
+
+template <typename T>
+void array<T>::push_front(const T& data)
+{
+    _reserve();
+
+    for (int i=_size; i>0; --i) {
+        arr[i] = arr[i-1];
+    }
+    arr[0] = data;
+
+    _size++;
+}
+
+template <typename T>
+void array<T>::insert(int position, T& data)
+{
+    if (position == 0) {
+        push_front();
+        return;
+    }
+    if (position == _size) {
+        push_back();
+        return;
+    }
+    if (position > _size || position < 0) {
+        throw std::out_of_range("Out of range");
+    }
+
+
+    _reserve();
+
+    for (int i=_size; i>position; --i) {
+        arr[i] = arr[i-1];
+    }
+    arr[position] = data;
+
+    _size++;
+}
+
+template <typename T>
+void array<T>::clean() {
+    delete [] arr;
+    arr = nullptr;
+    _capacity = 0;
+    _size = 0;
+}
 
 #endif // LIST_H

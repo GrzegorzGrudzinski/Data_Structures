@@ -43,6 +43,12 @@ int main() {
     }
     cout<<endl<<endl;
 
+    vector<int> wektor2 = {1,2,3,4,5};
+    for (int data : wektor2) {
+        cout<<data<<' ';
+    }
+    cout<<endl<<endl;
+
     wektor.clean();
 
     return 0;

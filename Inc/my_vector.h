@@ -1,28 +1,39 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <initializer_list>
 #include <stdexcept>
 
 template <typename T>
 class _vector_iterator
 {
-    T *current;
-public:
-    // _vector_iterator(arr) : current(node) {};     //
+    T* array;
 
-    // T & operator * () {}
-    //
-    // _vector_iterator & operator ++ () {return *this;}
-    //
-    // _vector_iterator & operator -- () {return *this;}
-    //
-    // bool operator !=(const _vector_iterator & other) const {
-    //     // return current != other.current;
-    // }
-    //
-    // bool operator == (const _vector_iterator & other) const {
-    //     // return current == other.current;
-    // }
+public:
+    _vector_iterator(T* arr) : array(arr) {};     //
+
+    T & operator * () {
+        return *array;
+    }
+
+    _vector_iterator & operator++() {
+        ++array;
+        return *this;
+    }
+
+    _vector_iterator & operator--() {
+        --array;
+        return *this;
+    }
+
+    bool operator!=(const _vector_iterator<T>& otherArray) const {
+        return array != otherArray.array;
+    }
+
+    bool operator==(const _vector_iterator<T>& otherArray) const {
+        return array == otherArray.array;
+    }
+
 };
 
 
@@ -42,8 +53,12 @@ public:
 
     T& operator[](int index);
 
-    // _vector_iterator<T> begin() {}
-    // _vector_iterator<T> end() {}
+    _vector_iterator<T> begin() {
+        return _vector_iterator<T> (arr);
+    }
+    _vector_iterator<T> end() {
+        return _vector_iterator<T> ((arr+_size));
+    }
 
     void push_back(const T& data);// push data at the end
     void push_front(const T& data); // push data to the front
@@ -58,8 +73,8 @@ public:
     // resize
     // reserve
 
-    int get_size(); // return the size of the array
-    int get_capacity(); // return the capacity of the array
+    int get_size() const; // return the size of the array
+    int get_capacity() const; // return the capacity of the array
 };
 
 /************************************
@@ -92,18 +107,19 @@ template <typename T>
 vector<T>::vector() : arr(nullptr), _size(0), _capacity(0)
 {}
 
+template<typename T>
+vector<T>::vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capacity(0)
+{
+    for (const T& data : init) {
+        push_back(data);
+    }
+}
+
+
 template <typename T>
 vector<T>::~vector()
 {
     clean();
-}
-
-template<typename T>
-vector<T>::vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capacity(0)
-{
-    // for (const T& data : init) {
-        // push_back(data);
-    // }
 }
 
 
@@ -187,12 +203,12 @@ void vector<T>::clean() {
 }
 
 template <typename T>
-int vector<T>::get_size() {
+int vector<T>::get_size() const {
     return _size;
 }
 
 template <typename T>
-int vector<T>::get_capacity() {
+int vector<T>::get_capacity() const {
     return _capacity;
 }
 

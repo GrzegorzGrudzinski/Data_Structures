@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <initializer_list>
+#include <stdexcept>
 
 template <typename T>
 struct Node {
@@ -84,7 +85,7 @@ public:
     void pop_element(int position); // delete node at the given position
     void erase(); // delete every element in the list
 
-    int get_size(); // return size of the list
+    int get_size() const; // return size of the list
     T& get_element(int position); // return node at the given position
     T& first();
     T& last();
@@ -315,7 +316,7 @@ T& list<T>::get_element(int position)
 
 
 template<typename T>
-int list<T>::get_size()
+int list<T>::get_size() const
 {
     return _size;
 }

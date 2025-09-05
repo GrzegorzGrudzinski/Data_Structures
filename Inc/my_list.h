@@ -75,7 +75,7 @@ public:
 
     list<T>& operator = (const list<T>& other );
 
-    void push_back(const T& data);// push node at the end
+    void push_back(const T& data);// push node to the end
     void push_front(const T& data); // push node to the front
     void insert(int position,const T& data); //
 
@@ -240,7 +240,7 @@ template<typename T>
 void list<T>::pop_element(int position)
 {
     if (head == nullptr || position < 0 || position > _size-1 ) {
-        throw 1111;
+        throw std::out_of_range("Out of range");
         return;
     }
     // check if the position is not at the beginning or at the end of the list
@@ -283,7 +283,7 @@ T& list<T>::first()
     if (head != nullptr) {
         return head->data;
     }
-    throw 11111;
+    throw std::out_of_range("Out of range");
 }
 
 template<typename T>
@@ -292,7 +292,7 @@ T& list<T>::last()
     if (tail != nullptr) {
         return tail->data;
     }
-    throw 11111;
+    throw std::out_of_range("Out of range");
 }
 
 template<typename T>
@@ -301,7 +301,7 @@ T& list<T>::get_element(int position)
     // check if the position is not at the beginning or at the end of the list
     if (position < 0 || position >= _size) {
         // push_back(data);
-        throw 11111;
+        throw std::out_of_range("Out of range");
     }
 
     Node <T>* temp = head;

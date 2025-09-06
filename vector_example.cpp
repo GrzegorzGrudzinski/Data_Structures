@@ -11,7 +11,7 @@ struct STROOKT {
 };
 
 int main() {
-    vector<int> wektor;
+    my_vector<int> wektor;
 
     for (int i=0; i<10; ++i) {
         wektor.push_back(i);
@@ -43,7 +43,7 @@ int main() {
     }
     cout<<endl<<endl;
 
-    vector<int> wektor2 = {1,2,3,4,5};
+    my_vector<int> wektor2 = {1,2,3,4,5};
     for (int data : wektor2) {
         cout<<data<<' ';
     }

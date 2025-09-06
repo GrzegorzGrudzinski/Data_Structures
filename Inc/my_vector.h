@@ -5,39 +5,39 @@
 #include <stdexcept>
 
 template <typename T>
-class _vector_iterator
+class _my_vector_iterator
 {
     T* array;
 
 public:
-    _vector_iterator(T* arr) : array(arr) {};     //
+    _my_vector_iterator(T* arr) : array(arr) {};     //
 
     T & operator * () {
         return *array;
     }
 
-    _vector_iterator & operator++() {
+    _my_vector_iterator & operator++() {
         ++array;
         return *this;
     }
 
-    _vector_iterator & operator--() {
+    _my_vector_iterator & operator--() {
         --array;
         return *this;
     }
 
-    bool operator!=(const _vector_iterator<T>& otherArray) const {
+    bool operator!=(const _my_vector_iterator<T>& otherArray) const {
         return array != otherArray.array;
     }
 
-    bool operator==(const _vector_iterator<T>& otherArray) const {
+    bool operator==(const _my_vector_iterator<T>& otherArray) const {
         return array == otherArray.array;
     }
 };
 
 
 template <typename T>
-class vector
+class my_vector
 {
     T* arr;
 
@@ -46,24 +46,24 @@ class vector
 
     void _reserve ();
 public:
-    vector();     //
-    vector(std::initializer_list<T> init);
-    ~vector();    // make sure that every node is deleted
+    my_vector();     //
+    my_vector(std::initializer_list<T> init);
+    ~my_vector();    // make sure that every node is deleted
 
     T& operator[](int index);
 
-    _vector_iterator<T> begin() {
-        return _vector_iterator<T> (arr);
+    _my_vector_iterator<T> begin() {
+        return _my_vector_iterator<T> (arr);
     }
-    _vector_iterator<T> end() {
-        return _vector_iterator<T> ((arr+_size));
+    _my_vector_iterator<T> end() {
+        return _my_vector_iterator<T> ((arr+_size));
     }
 
     void push_back(const T& data);// push data at the end
     void push_front(const T& data); // push data to the front
     void insert(int position, const T& data); // insert data after the given position
 
-    // void erase(_vector_iterator<T> iter1,  _vector_iterator<T> iter2 = nullptr); //
+    // void erase(__my_vector_iterator<T> iter1,  __my_vector_iterator<T> iter2 = nullptr); //
     void clean();
 
     void pop_back(); // delete last node
@@ -81,7 +81,7 @@ public:
  ************************************/
 
 template <typename T>
-void vector<T>::_reserve()
+void my_vector<T>::_reserve()
 {
     int tempCapacity;
     if (_size == _capacity) {
@@ -102,12 +102,12 @@ void vector<T>::_reserve()
 }
 
 template <typename T>
-vector<T>::vector() : arr(nullptr), _size(0), _capacity(0)
+my_vector<T>::my_vector() : arr(nullptr), _size(0), _capacity(0)
 {}
 
 
 template<typename T>
-vector<T>::vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capacity(0)
+my_vector<T>::my_vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capacity(0)
 {
     for (const T& data : init) {
         push_back(data);
@@ -116,14 +116,14 @@ vector<T>::vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capa
 
 
 template <typename T>
-vector<T>::~vector()
+my_vector<T>::~my_vector()
 {
     clean();
 }
 
 
 template <typename T>
-T& vector<T>::operator[] (int index)
+T& my_vector<T>::operator[] (int index)
 {
     if (index < _size && index >= 0) {
         return arr[index];
@@ -132,7 +132,7 @@ T& vector<T>::operator[] (int index)
 }
 
 template <typename T>
-void vector<T>::push_back(const T& data)
+void my_vector<T>::push_back(const T& data)
 {
     _reserve();
     arr[_size] = data;
@@ -140,7 +140,7 @@ void vector<T>::push_back(const T& data)
 }
 
 template <typename T>
-void vector<T>::push_front(const T& data)
+void my_vector<T>::push_front(const T& data)
 {
     _reserve();
 
@@ -153,7 +153,7 @@ void vector<T>::push_front(const T& data)
 }
 
 template <typename T>
-void vector<T>::insert(int position,const T& data)
+void my_vector<T>::insert(int position,const T& data)
 {
     if (position == 0) {
         push_front(data);
@@ -179,12 +179,12 @@ void vector<T>::insert(int position,const T& data)
 }
 
 template <typename T>
-void vector<T>::pop_back() {
+void my_vector<T>::pop_back() {
     _size--;
 }
 
 template <typename T>
-void vector<T>::pop_front() {
+void my_vector<T>::pop_front() {
     for (int i=0; i<_size-1; ++i) {
         arr[i] = arr[i+1];
     }
@@ -194,7 +194,7 @@ void vector<T>::pop_front() {
 
 
 template <typename T>
-void vector<T>::clean() {
+void my_vector<T>::clean() {
     delete [] arr;
     arr = nullptr;
     _capacity = 0;
@@ -202,12 +202,12 @@ void vector<T>::clean() {
 }
 
 template <typename T>
-int vector<T>::get_size() const {
+int my_vector<T>::get_size() const {
     return _size;
 }
 
 template <typename T>
-int vector<T>::get_capacity() const {
+int my_vector<T>::get_capacity() const {
     return _capacity;
 }
 

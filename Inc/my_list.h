@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+//TODO add / repair copying constructor
+
 #include <initializer_list>
 #include <stdexcept>
 
@@ -14,38 +16,38 @@ struct Node {
 };
 
 template <typename T>
-class _list_iterator
+class _my_list_iterator
 {
     Node <T> *current;
 public:
-    _list_iterator(Node<T>* node) : current(node) {};     //
+    _my_list_iterator(Node<T>* node) : current(node) {};     //
 
     T & operator * () {
         return current->data;
     }
 
-    _list_iterator & operator ++ () {
+    _my_list_iterator & operator ++ () {
         current = current->next;
         return *this;
     }
 
-    _list_iterator & operator -- () {
+    _my_list_iterator & operator -- () {
         current = current->prev;
         return *this;
     }
 
-    bool operator !=(const _list_iterator & other) const {
+    bool operator !=(const _my_list_iterator & other) const {
         return current != other.current;
     }
 
-    bool operator == (const _list_iterator & other) const {
+    bool operator == (const _my_list_iterator & other) const {
         return current == other.current;
     }
 };
 
 
 template <typename T>
-class list
+class my_list
 {
     Node <T> * head;
     Node <T> * tail;
@@ -53,28 +55,28 @@ class list
     int _size;
 public:
 
-    list();     //
-    list(std::initializer_list<T>);
-    list(const list& other);
-    ~list();    // make sure that every node is deleted
+    my_list();     //
+    my_list(std::initializer_list<T>);
+    my_list(const my_list& other);
+    ~my_list();    // make sure that every node is deleted
 
-    _list_iterator<T> begin() {
-        return  _list_iterator<T> (head);
+    _my_list_iterator<T> begin() {
+        return  _my_list_iterator<T> (head);
     }
 
-    _list_iterator<T> end() {
-        return  _list_iterator<T> (tail->next);
+    _my_list_iterator<T> end() {
+        return  _my_list_iterator<T> (tail->next);
     }
 
-    _list_iterator<T> begin() const{
-        return  _list_iterator<T> (head);
+    _my_list_iterator<T> begin() const{
+        return  _my_list_iterator<T> (head);
     }
 
-    _list_iterator<T> end() const{
-        return  _list_iterator<T> (tail->next);
+    _my_list_iterator<T> end() const{
+        return  _my_list_iterator<T> (tail->next);
     }
 
-    list<T>& operator = (const list<T>& other );
+    my_list<T>& operator = (const my_list<T>& other );
 
     void push_back(const T& data);// push node to the end
     void push_front(const T& data); // push node to the front
@@ -83,9 +85,9 @@ public:
     void pop_back(); // delete last node
     void pop_front();// delete first node
     void pop_element(int position); // delete node at the given position
-    void erase(); // delete every element in the list
+    void erase(); // delete every element in the my_list
 
-    int get_size() const; // return size of the list
+    int get_size() const; // return size of the my_list
     T& get_element(int position); // return node at the given position
     T& first();
     T& last();
@@ -94,11 +96,11 @@ public:
 
 
 template<typename T>
-list<T>::list() : head(nullptr), tail(nullptr), _size(0)
+my_list<T>::my_list() : head(nullptr), tail(nullptr), _size(0)
 {}
 
 template<typename T>
-list<T>::list(std::initializer_list<T> init) : head(nullptr), tail(nullptr), _size(0)
+my_list<T>::my_list(std::initializer_list<T> init) : head(nullptr), tail(nullptr), _size(0)
 {
     for (const T& data : init) {
         push_back(data);
@@ -106,7 +108,7 @@ list<T>::list(std::initializer_list<T> init) : head(nullptr), tail(nullptr), _si
 }
 
 template<typename T>
-list<T>::list(const list& other)
+my_list<T>::my_list(const my_list& other)
 {
     for (const T& data : other) {
         push_back(data);
@@ -115,7 +117,7 @@ list<T>::list(const list& other)
 
 
 template<typename T>
-list<T>::~list()
+my_list<T>::~my_list()
 {
     while (head != nullptr) {
         pop_front();
@@ -123,7 +125,7 @@ list<T>::~list()
 }
 
 template<typename T>
-list<T>& list<T>::operator=(const list<T>& other)
+my_list<T>& my_list<T>::operator=(const my_list<T>& other)
 {
     if (&other != this) {
         erase();
@@ -135,11 +137,11 @@ list<T>& list<T>::operator=(const list<T>& other)
 }
 
 template<typename T>
-void list<T>::push_back(const T& data)
+void my_list<T>::push_back(const T& data)
 {
     Node<T>* next = new Node <T>(data);
 
-    // if the list was not created create the first Node
+    // if the my_list was not created create the first Node
     if (head == nullptr) {
         head = tail = next;
     }
@@ -153,11 +155,11 @@ void list<T>::push_back(const T& data)
 
 
 template<typename T>
-void list<T>::push_front(const T& data)
+void my_list<T>::push_front(const T& data)
 {
     Node <T>* next = new Node <T>(data);
 
-    // if the list was not created create the first Node
+    // if the my_list was not created create the first Node
     if (head == nullptr) {
         head = tail = next;
     }
@@ -171,9 +173,9 @@ void list<T>::push_front(const T& data)
 
 
 template<typename T>
-void list<T>::insert(int position,const T& data)
+void my_list<T>::insert(int position,const T& data)
 {
-    // check if the position is not at the beginning or at the end of the list
+    // check if the position is not at the beginning or at the end of the my_list
     if (position <= 0) {
         push_front(data);
         return;
@@ -201,7 +203,7 @@ void list<T>::insert(int position,const T& data)
 }
 
 template<typename T>
-void list<T>::pop_back()
+void my_list<T>::pop_back()
 {
     if (head == nullptr) {
         return;
@@ -220,7 +222,7 @@ void list<T>::pop_back()
 
 
 template<typename T>
-void list<T>::pop_front()
+void my_list<T>::pop_front()
 {
     if (head == nullptr) {
         return;
@@ -238,13 +240,13 @@ void list<T>::pop_front()
 }
 
 template<typename T>
-void list<T>::pop_element(int position)
+void my_list<T>::pop_element(int position)
 {
     if (head == nullptr || position < 0 || position > _size-1 ) {
         throw std::out_of_range("Out of range");
         return;
     }
-    // check if the position is not at the beginning or at the end of the list
+    // check if the position is not at the beginning or at the end of the my_list
     if (position == 0) {
         pop_front();
         return;
@@ -269,7 +271,7 @@ void list<T>::pop_element(int position)
 }
 
 template<typename T>
-void list<T>::erase()
+void my_list<T>::erase()
 {
     while (head != nullptr) {
         pop_front();
@@ -279,7 +281,7 @@ void list<T>::erase()
 }
 
 template<typename T>
-T& list<T>::first()
+T& my_list<T>::first()
 {
     if (head != nullptr) {
         return head->data;
@@ -288,7 +290,7 @@ T& list<T>::first()
 }
 
 template<typename T>
-T& list<T>::last()
+T& my_list<T>::last()
 {
     if (tail != nullptr) {
         return tail->data;
@@ -297,9 +299,9 @@ T& list<T>::last()
 }
 
 template<typename T>
-T& list<T>::get_element(int position)
+T& my_list<T>::get_element(int position)
 {
-    // check if the position is not at the beginning or at the end of the list
+    // check if the position is not at the beginning or at the end of the my_list
     if (position < 0 || position >= _size) {
         // push_back(data);
         throw std::out_of_range("Out of range");
@@ -316,7 +318,7 @@ T& list<T>::get_element(int position)
 
 
 template<typename T>
-int list<T>::get_size() const
+int my_list<T>::get_size() const
 {
     return _size;
 }

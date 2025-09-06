@@ -11,7 +11,7 @@ struct STROOKT {
 };
 
 int main() {
-    list<STROOKT> my_list1;
+   my_list<STROOKT> my_list1;
 
     STROOKT strookt1;
 
@@ -33,12 +33,8 @@ int main() {
     }
     cout<<endl<<endl;
 
-    STROOKT strookt2;
-    strookt2.number = 99;
-    strookt2.character = 'Z';
-
-    list<STROOKT> my_list2 = {
-        strookt1, strookt2
+    my_list<STROOKT> my_list2 = {
+        {-1, 'a'}, {-2, 'b'}, {-3, 'c'}
     };
 
     cout<<"list 2: "<<endl;

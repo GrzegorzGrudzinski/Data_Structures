@@ -45,17 +45,27 @@ class my_vector
     int _capacity;
 
     void _reserve ();
+
 public:
     my_vector();     //
     my_vector(std::initializer_list<T> init);
     ~my_vector();    // make sure that every node is deleted
 
     T& operator[](int index);
+    const T& operator[](int index) const;
+    my_vector<T>& operator=(const my_vector<T>& other);
 
     _my_vector_iterator<T> begin() {
         return _my_vector_iterator<T> (arr);
     }
     _my_vector_iterator<T> end() {
+        return _my_vector_iterator<T> ((arr+_size));
+    }
+
+    _my_vector_iterator<T> begin() const{
+        return _my_vector_iterator<T> (arr);
+    }
+    _my_vector_iterator<T> end() const {
         return _my_vector_iterator<T> ((arr+_size));
     }
 
@@ -69,7 +79,8 @@ public:
     void pop_back(); // delete last node
     void pop_front();// delete first node
     void pop_element(int position); // delete node at the given position
-    // resize
+
+    void resize(int newSize);
     // reserve
 
     int get_size() const; // return the size of the array
@@ -130,6 +141,31 @@ T& my_vector<T>::operator[] (int index)
     }
     throw std::out_of_range("Out of range");
 }
+
+// Const version for read-only access
+template <typename T>
+const T& my_vector<T>::operator[](int index) const
+{
+    if (index < _size && index >= 0) {
+        return arr[index];
+    }
+    throw std::out_of_range("Out of range");
+}
+
+
+
+template<typename T>
+my_vector<T>& my_vector<T>::operator=(const my_vector<T>& other)
+{
+    if (&other != this) {
+        clean();
+        for (const T& data : other) {
+            push_back(data);
+        }
+    }
+    return *this;
+}
+
 
 template <typename T>
 void my_vector<T>::push_back(const T& data)
@@ -192,13 +228,50 @@ void my_vector<T>::pop_front() {
     _size--;
 }
 
-
 template <typename T>
 void my_vector<T>::clean() {
     delete [] arr;
     arr = nullptr;
     _capacity = 0;
     _size = 0;
+}
+
+
+template <typename T>
+void my_vector<T>::resize(int newSize) {
+    if (newSize < 0) {
+        throw std::invalid_argument("New size cannot be negative.");
+    }
+    if (newSize == _size) {
+        return;
+    }
+    else if (newSize < _size) {
+        _size = newSize;
+        return;
+    }
+    else if (newSize > _capacity) {
+        // first alocate more memory
+        T* temp = new T [newSize];
+        for (int i=0; i<_size; ++i) {
+            temp[i] = arr[i];
+        }
+        // Initialize new elements
+        for (int i = _size; i < newSize; ++i) {
+            temp[i] = T();
+        }
+
+        delete [] arr;
+
+        arr = temp;
+        _capacity = newSize;
+        _size = newSize;
+    }
+   else {
+       for (int i = _size; i < newSize; ++i) {
+           arr[i] = T();
+       }
+       _size = newSize;
+    }
 }
 
 template <typename T>

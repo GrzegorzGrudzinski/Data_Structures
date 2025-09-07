@@ -44,6 +44,16 @@ int main() {
     cout<<endl<<endl;
 
     my_vector<int> wektor2 = {1,2,3,4,5};
+
+    wektor2.resize(3);
+
+    for (int data : wektor2) {
+        cout<<data<<' ';
+    }
+    cout<<endl<<endl;
+
+    wektor2.resize(6);
+
     for (int data : wektor2) {
         cout<<data<<' ';
     }

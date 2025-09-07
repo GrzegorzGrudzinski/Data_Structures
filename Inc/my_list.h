@@ -91,7 +91,6 @@ public:
     T& get_element(int position); // return node at the given position
     T& first();
     T& last();
-
 };
 
 

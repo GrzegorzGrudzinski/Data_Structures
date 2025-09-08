@@ -48,6 +48,7 @@ class my_vector
 
 public:
     my_vector();     //
+    my_vector(const my_vector& other);     //
     my_vector(std::initializer_list<T> init);
     ~my_vector();    // make sure that every node is deleted
 
@@ -116,6 +117,20 @@ template <typename T>
 my_vector<T>::my_vector() : arr(nullptr), _size(0), _capacity(0)
 {}
 
+template <typename T>
+my_vector<T>::my_vector(const my_vector& other)
+{
+    _capacity = other._capacity;
+    _size = other._size;
+
+    // 2. Bezpośrednio zaalokuj pamięć o odpowiednim rozmiarze (tylko raz!)
+    arr = new T[_capacity];
+
+    // 3. Skopiuj wszystkie elementy w jednej, prostej pętli
+    for (int i = 0; i < _size; ++i) {
+        arr[i] = other.arr[i];
+    }
+}
 
 template<typename T>
 my_vector<T>::my_vector(std::initializer_list<T> init) : arr(nullptr), _size(0), _capacity(0)
@@ -157,11 +172,16 @@ const T& my_vector<T>::operator[](int index) const
 template<typename T>
 my_vector<T>& my_vector<T>::operator=(const my_vector<T>& other)
 {
-    if (&other != this) {
-        clean();
-        for (const T& data : other) {
-            push_back(data);
-        }
+    if (this == &other) {
+        return *this;
+    }
+    clean();
+    _size = other._size;
+    _capacity = other._capacity;
+    arr = new T[_capacity];
+
+    for (int i=0; i<_size; ++i) {
+        arr[i] = other.arr[i];
     }
     return *this;
 }

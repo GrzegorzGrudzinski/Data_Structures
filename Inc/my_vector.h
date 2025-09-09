@@ -123,10 +123,7 @@ my_vector<T>::my_vector(const my_vector& other)
     _capacity = other._capacity;
     _size = other._size;
 
-    // 2. Bezpośrednio zaalokuj pamięć o odpowiednim rozmiarze (tylko raz!)
     arr = new T[_capacity];
-
-    // 3. Skopiuj wszystkie elementy w jednej, prostej pętli
     for (int i = 0; i < _size; ++i) {
         arr[i] = other.arr[i];
     }
